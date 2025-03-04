@@ -3,13 +3,14 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import app from "./app.js";
 // const cors = require('cors');
 // const bodyParser = require('body-parser');
 // const authRoutes = require('./routes/auth');
 import { port, dbrul } from './config.js';
 
 
-const app = express();
+// const app = express();
 
 // // Middleware
 app.use(cors());
