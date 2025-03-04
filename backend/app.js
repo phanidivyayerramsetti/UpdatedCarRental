@@ -1,24 +1,20 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-require('dotenv').config();  // To use environment variables from a .env file
+import express from "express";
+import cors from "cors";
+// import bodyParser from "body-parser"; // Not needed if using express.json()
+import authRoutes from "./routes/auth.js"; // Ensure this file exists
 
 const app = express();
-app.use(cors()); // Enable CORS
+
+// Middleware
+app.use(cors());
 app.use(express.json()); // To parse incoming JSON requests
+// app.use(bodyParser.json()); // Not needed since express.json() does this
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("MongoDB connected"))
-    .catch((err) => console.log(err));
+// Routes
+app.use("/api/auth", authRoutes);
 
-// Define a simple route
-app.get('/', (req, res) => {
-    res.send('Car Rental Management System API is running');
+app.get("/", (req, res) => {
+  res.send("🚗 Car Rental Backend is Running!");
 });
 
-// Listen on a port
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+export default app; // Export app for use in server.js
