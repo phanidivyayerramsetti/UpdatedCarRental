@@ -33,7 +33,7 @@ const Registration = () => {
     }
   
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch('http://localhost:5555/api/users/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ const Registration = () => {
         alert('Registration successful!');
         navigate('/login'); // Redirect to the login page after successful registration
       } else {
-        alert(data.message || 'Registration failed');
+        alert(data.message || 'Registration failed. Please try again.');
       }
     } catch (error) {
       console.error('Error during registration:', error);
