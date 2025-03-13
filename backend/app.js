@@ -9,6 +9,11 @@ const app = express();
 
 // Middleware
 app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // Replace with your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow DELETE requests
+  credentials: true,
+}));
 app.use(express.json()); // To parse incoming JSON requests
 // app.use(bodyParser.json()); // Not needed since express.json() does this
 

@@ -1,121 +1,197 @@
 /* Header */
 .app-header {
-    background-color: #B7DBEF;
-    padding: 0;
-    width: 100%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    box-sizing: border-box;
-  }
-  
-  /* App Title */
-  .app-header h1 {
-    margin: 0;
-    font-size: 24px;
-    font-weight: bold;
-    color: #000;
-    white-space: nowrap;
-    padding: 15px 20px;
-  }
-  
-  /* Hamburger Menu (Hidden by Default) */
+  background-color: #B7DBEF;
+  padding: 0; /* Remove padding from the header */
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed; /* Fix the header at the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure the header appears above other content */
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Center items vertically */
+  box-sizing: border-box;
+}
+
+/* App Title */
+.app-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+  white-space: nowrap;
+  padding: 15px 20px; /* Add padding to the title */
+}
+
+/* Hamburger Menu (Hidden by Default) */
+.hamburger-menu {
+  display: none; /* Hide by default */
+  cursor: pointer;
+  padding: 15px 20px; /* Add padding to the hamburger menu */
+}
+
+/* Navigation Tabs (Visible by Default on Larger Screens) */
+.header-nav {
+  flex-grow: 1;
+  display: flex; /* Ensure the container is a flexbox */
+  justify-content: flex-end; /* Align tabs to the right */
+}
+
+.header-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.header-nav ul li {
+  font-size: 16px; /* Adjust font size */
+  cursor: pointer;
+  white-space: nowrap; /* Prevent text from wrapping */
+  padding: 15px 20px; /* Add padding to match header height */
+  position: relative; /* For the border */
+  transition: all 0.3s; /* Smooth transition for all properties */
+  display: flex;
+  align-items: center; /* Vertically center the text */
+}
+
+/* Hover Effect */
+.header-nav ul li:hover {
+  background-color: rgba(53, 61, 69, 0.1); /* Light background on hover */
+}
+
+/* Active Tab (Clicked Tab) */
+.header-nav ul li.active {
+  background-color: rgba(53, 61, 69, 0.1); /* Light background for active tab */
+  border-left: 2px solid #353D45; /* Left border for active tab */
+  border-right: 2px solid #353D45; /* Right border for active tab */
+  border-bottom: 2px solid #353D45; /* Bottom border for active tab */
+}
+
+/* Profile Icon */
+.profile-icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 15px 20px; /* Add padding to match header height */
+  transition: all 0.3s;
+}
+
+.profile-icon:hover {
+  opacity: 0.8; /* Reduce opacity on hover */
+}
+
+.profile-icon.active {
+  background-color: rgba(53, 61, 69, 0.1); /* Light background for active tab */
+  border-left: 2px solid #353D45; /* Left border for active tab */
+  border-right: 2px solid #353D45; /* Right border for active tab */
+  border-bottom: 2px solid #353D45; /* Bottom border for active tab */
+}
+
+/* Dropdown */
+/* Dropdown */
+.dropdown {
+  position: absolute;
+  top: 100%; /* Position below the profile icon */
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc; /* Main dropdown border */
+  border-radius: 0; /* Square borders */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1001; /* Ensure the dropdown appears above other content */
+  min-width: 150px;
+}
+
+.dropdown-item-container {
+  position: relative; /* Make the container a positioning context */
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s; /* Smooth transition for all properties */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0; /* Light line separator */
+}
+
+/* Remove border from the last item */
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+/* Hover Effect */
+.dropdown-item:hover {
+  background-color: #f0f0f0; /* Light background on hover */
+  border: 1px solid #000; /* Black border on hover */
+  border-radius: 0; /* Square borders */
+}
+
+/* Sub-Dropdown */
+.sub-dropdown {
+  position: absolute;
+  top: 0; /* Align with the top of the parent dropdown item */
+  left: -100%; /* Position to the left of the parent dropdown item */
+  background-color: white;
+  border: 1px solid #ccc; /* Sub-dropdown border */
+  border-radius: 0; /* Square borders */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure the subdropdown appears below the main dropdown */
+  min-width: 150px;
+}
+
+.sub-dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s; /* Smooth transition for all properties */
+  border-bottom: 1px solid #f0f0f0; /* Light line separator */
+}
+
+/* Remove border from the last item */
+.sub-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+/* Hover Effect */
+.sub-dropdown-item:hover {
+  background-color: #f0f0f0; /* Light background on hover */
+  border: 1px solid #000; /* Black border on hover */
+  border-radius: 0; /* Square borders */
+}
+
+/* Highlight the main dropdown option when its sub-dropdown is open */
+.dropdown-item.highlighted {
+  background-color: #f0f0f0; /* Light background for highlighted option */
+  border: 1px solid #000; /* Black border for highlighted option */
+}
+
+.profile-icon.active {
+  background-color: rgba(53, 61, 69, 0.1); /* Light background for active tab */
+  border-left: 2px solid #353D45; /* Left border for active tab */
+  border-right: 2px solid #353D45; /* Right border for active tab */
+  border-bottom: 2px solid #353D45; /* Bottom border for active tab */
+}
+
+/* Show hamburger menu on smaller screens */
+@media (max-width: 768px) {
   .hamburger-menu {
-    display: none;
-    cursor: pointer;
-    padding: 15px 20px;
+    display: block; /* Show the hamburger menu */
   }
-  
-  /* Navigation Tabs (Visible by Default on Larger Screens) */
+
   .header-nav {
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
+    display: none; /* Hide the navigation tabs by default on smaller screens */
   }
-  
-  .header-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
+
+  .header-nav.open {
+    display: flex; /* Show the navigation tabs when the menu is open */
+    flex-direction: column; /* Stack the tabs vertically */
+    position: absolute;
+    top: 60px; /* Adjust based on your header height */
+    right: 0;
+    background-color: #B7DBEF;
+    width: 100%;
+    z-index: 1000;
   }
-  
-  .header-nav ul li {
-    font-size: 16px;
-    cursor: pointer;
-    white-space: nowrap;
-    padding: 15px 20px;
-    position: relative;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-  }
-  
-  /* Hover Effect */
-  .header-nav ul li:hover {
-    background-color: rgba(53, 61, 69, 0.1);
-  }
-  
-  /* Active Tab (Clicked Tab) */
-  .header-nav ul li.active {
-    background-color: rgba(53, 61, 69, 0.1);
-    border-left: 2px solid #353D45;
-    border-right: 2px solid #353D45;
-    border-bottom: 2px solid #353D45;
-  }
-  
-  /* Icon Container */
-  .icon-container {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-  }
-  
-  /* Profile Icon */
-  .profile-icon,
-  .cart-icon,
-  .wishlist-icon {
-    cursor: pointer;
-    padding: 15px 20px;
-  }
-  
-  .profile-icon:hover,
-  .cart-icon:hover,
-  .wishlist-icon:hover {
-    opacity: 0.8;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .hamburger-menu {
-      display: block;
-    }
-  
-    .header-nav {
-      display: none;
-      position: absolute;
-      top: 60px;
-      right: 0;
-      background-color: #B7DBEF;
-      width: 100%;
-    }
-  
-    .header-nav.open {
-      display: block;
-    }
-  
-    .header-nav ul {
-      flex-direction: column;
-    }
-  
-    .header-nav ul li {
-      width: 100%;
-      padding: 10px 20px;
-    }
-  }
-  
+}

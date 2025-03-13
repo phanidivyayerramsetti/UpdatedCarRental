@@ -4,13 +4,13 @@
   padding: 0; /* Remove padding from the header */
   width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: fixed;
+  position: fixed; /* Fix the header at the top */
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 1000; /* Ensure the header appears above other content */
   display: flex;
   justify-content: space-between;
-  align-items: stretch; /* Stretch children to full height */
+  align-items: center; /* Center items vertically */
   box-sizing: border-box;
 }
 
@@ -65,9 +65,8 @@
 .header-nav ul li.active {
   background-color: rgba(53, 61, 69, 0.1); /* Light background for active tab */
   border-left: 2px solid #353D45; /* Left border for active tab */
-  border-right: 2px solid #353D45; /* Right border fo active tab */
+  border-right: 2px solid #353D45; /* Right border for active tab */
   border-bottom: 2px solid #353D45; /* Bottom border for active tab */
-
 }
 
 /* Profile Icon */
@@ -76,69 +75,115 @@
   display: flex;
   align-items: center;
   padding: 15px 20px; /* Add padding to match header height */
+  transition: all 0.3s;
 }
 
 .profile-icon:hover {
   opacity: 0.8; /* Reduce opacity on hover */
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  /* Show Hamburger Menu */
-  .hamburger-menu {
-    display: block; /* Show on small screens */
-  }
+.profile-icon.active {
+  background-color: rgba(53, 61, 69, 0.1); /* Light background for active tab */
+  border-left: 2px solid #353D45; /* Left border for active tab */
+  border-right: 2px solid #353D45; /* Right border for active tab */
+  border-bottom: 2px solid #353D45; /* Bottom border for active tab */
+}
 
-  /* Hide Navigation Tabs by Default */
-  .header-nav {
-    display: none; /* Hide on small screens */
-    position: absolute;
-    top: 60px; /* Adjust based on header height */
-    right: 0;
-    background-color: #B7DBEF;
-    width: 100%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* Ensure it appears above other content */
-  }
+/* Dropdown */
+.dropdown {
+  position: absolute;
+  top: 100%; /* Position below the profile icon */
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc; /* Main dropdown border */
+  border-radius: 0; /* Square borders */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1001; /* Ensure the dropdown appears above other content */
+  min-width: 150px;
+}
 
-  /* Show Navigation Tabs When Menu is Open */
-  .header-nav.open {
-    display: block;
-  }
+.dropdown-item-container {
+  position: relative; /* Make the container a positioning context */
+}
 
-  /* Stack Navigation Tabs Vertically */
-  .header-nav ul {
-    flex-direction: column;
-  }
-
-  /* Ensure Full Width for Each Tab */
-  .header-nav ul li {
-    width: 100%; /* Ensure each tab takes full width */
-    padding: 10px 20px; /* Add padding for better spacing */
-    box-sizing: border-box; /* Include padding in width */
-  }
-
-  /* Profile Tab */
-.profile-tab {
+.dropdown-item {
+  padding: 8px 16px;
   cursor: pointer;
+  transition: all 0.3s; /* Smooth transition for all properties */
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  padding: 15px 20px;
-  transition: all 0.3s;
-  border-radius: 50%;
+  border-bottom: 1px solid #f0f0f0; /* Light line separator */
+}
+
+/* Remove border from the last item */
+.dropdown-item:last-child {
+  border-bottom: none;
 }
 
 /* Hover Effect */
-.profile-tab:hover {
-  background-color: rgba(53, 61, 69, 0.1);
+.dropdown-item:hover {
+  background-color: #f0f0f0; /* Light background on hover */
+  border: 1px solid #000; /* Black border on hover */
+  border-radius: 0; /* Square borders */
 }
 
-/* Active Profile Tab */
-.profile-tab.active {
-  background-color: rgba(53, 61, 69, 0.1);
-  border-left: 2px solid #353D45;
-  border-right: 2px solid #353D45;
-  border-bottom: 2px solid #353D45;
+/* Sub-Dropdown */
+.sub-dropdown {
+  position: absolute;
+  top: 0; /* Align with the top of the parent dropdown item */
+  left: -100%; /* Position to the left of the parent dropdown item */
+  background-color: white;
+  border: 1px solid #ccc; /* Sub-dropdown border */
+  border-radius: 0; /* Square borders */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure the subdropdown appears below the main dropdown */
+  min-width: 150px;
 }
+
+.sub-dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s; /* Smooth transition for all properties */
+  border-bottom: 1px solid #f0f0f0; /* Light line separator */
+}
+
+/* Remove border from the last item */
+.sub-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+/* Hover Effect */
+.sub-dropdown-item:hover {
+  background-color: #f0f0f0; /* Light background on hover */
+  border: 1px solid #000; /* Black border on hover */
+  border-radius: 0; /* Square borders */
+}
+
+/* Highlight the main dropdown option when its sub-dropdown is open */
+.dropdown-item.highlighted {
+  background-color: #f0f0f0; /* Light background for highlighted option */
+  border: 1px solid #000; /* Black border for highlighted option */
+}
+
+/* Show hamburger menu on smaller screens */
+@media (max-width: 768px) {
+  .hamburger-menu {
+    display: block; /* Show the hamburger menu */
+  }
+
+  .header-nav {
+    display: none; /* Hide the navigation tabs by default on smaller screens */
+    flex-direction: column; /* Stack the tabs vertically */
+    position: absolute;
+    top: 60px; /* Adjust based on your header height */
+    right: 0;
+    background-color: #B7DBEF;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .header-nav.open {
+    display: flex; /* Show the navigation tabs when the menu is open */
+  }
 }
