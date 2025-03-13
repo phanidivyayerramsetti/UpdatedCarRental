@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+//import ForgotPassword from './ForgotPassword'
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,6 +14,8 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log('Logging in as:', activeUser, email, password);
+    const payload = { email, password, role: activeUser };
+    console.log('Login request payload:', payload); 
   
     try {
       const response = await fetch('http://localhost:5555/api/users/auth/login', {
@@ -32,9 +35,9 @@ const Login = () => {
   
         // Redirect based on role
         if (activeUser === 'owner') {
-          navigate('/owner-dashboard');
+          navigate('/owner');
         } else if (activeUser === 'renter') {
-          navigate('/renter-dashboard', { state: { welcomeMessage: "Welcome to the Renter Dashboard!" } });
+          navigate('/renter');
         }
       } else {
         alert(data.message || 'Login failed');
@@ -76,7 +79,7 @@ const Login = () => {
           {/* Email */}
           <div className="input-field">
             <label htmlFor="email">
-              Email/User ID <span className="required">*</span>
+              Email <span className="required">*</span>
             </label>
             <input
               type="email"
@@ -109,9 +112,14 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Forgot Password Link */}
-          <div className="forgot-password">
-            <a href="/forgot-password">Forgot your password?</a>
+        {/* Forgot Password Link */}
+        <div className="forgot-password">
+            <button
+              className="forgot-password-link"
+              onClick={() => navigate('/forgot-password')}
+            >
+              Forgot your password?
+            </button>
           </div>
 
           {/* Login Button */}

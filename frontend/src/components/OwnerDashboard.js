@@ -14,24 +14,6 @@ const OwnerDashboard = () => {
             <h2>Welcome to Car Rental Management System!</h2>
           </div>
         )}
-
-        {activeTab === "Manage Cars" && (
-          <section className="manage-cars-section">
-            <h3>Manage Cars</h3>
-            <div className="car-list">
-              <div className="car-card">
-                <h4>Car 1</h4>
-                <p>Model: Sedan</p>
-                <p>Status: Available</p>
-              </div>
-              <div className="car-card">
-                <h4>Car 2</h4>
-                <p>Model: SUV</p>
-                <p>Status: Rented</p>
-              </div>
-            </div>
-          </section>
-        )}
       </main>
     </div>
   );
