@@ -1,0 +1,142 @@
+/* ManageCars.css */
+.manage-cars {
+    padding: 20px;
+    margin-top: 7%; /* Account for fixed header */
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    overflow: visible; /* Ensure content is not hidden */
+  }
+  
+  .manage-cars h2 {
+    margin-top: 0;
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  /* Container for the scrollable table */
+  .table-container {
+    max-height: 400px; /* Set a fixed height for the scrollable area */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #575757; /* Match the table border */
+    margin-top: 10px;
+  }
+  
+  /* Table styling */
+  .car-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  /* Table header styling */
+  .car-table thead {
+    position: sticky;
+    top: 0;
+    background-color: #f2f2f2; /* Light gray background for headers */
+    z-index: 1; /* Ensure headers stay above the body */
+  }
+  
+  .car-table th {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #575757; /* Bottom border for headers */
+  }
+  
+  /* Table row styling */
+  .car-table td {
+    padding: 12px;
+    border-bottom: 2px solid #575757; /* Bottom border for rows */
+  }
+  
+  /* Remove bottom border for the last row */
+  .car-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  /* Image column styling */
+  .car-image {
+    width: 120px;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .no-image {
+    width: 120px;
+    height: 80px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    color: #888;
+  }
+  
+  /* Details column styling */
+  .details-column {
+    vertical-align: top; /* Align content to the top */
+  }
+  
+  .detail-row {
+    margin-bottom: 8px; /* Space between detail rows */
+  }
+  
+  .detail-row:last-child {
+    margin-bottom: 0; /* Remove margin for the last row */
+  }
+  
+  .detail-label {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  /* Actions column styling */
+  .actions-column {
+    text-align: center; /* Center the buttons */
+  }
+  
+  /* Container for Update and Delete buttons */
+  .buttons-container {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 8px; /* Add space between buttons */
+    align-items: center; /* Center buttons horizontally */
+  }
+  
+  /* Button styling */
+  button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #353D45;
+    cursor: pointer;
+    font-size: 14px;
+    width: 80px; /* Fixed width for buttons */
+  }
+  
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  /* Button for adding a new car */
+  .addcar {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #E7E7E7;
+    cursor: pointer;
+    font-size: 16px;
+    color: black;
+    margin-bottom: 20px;
+    display: inline-block;
+    text-transform: uppercase;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .addcar:hover {
+    background-color: #E7E7E7;
+    opacity: 0.8;
+  }

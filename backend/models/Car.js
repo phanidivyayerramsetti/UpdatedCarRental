@@ -1,13 +1,18 @@
 import mongoose from "mongoose";
 
 const carSchema = new mongoose.Schema({
-  name: { type: String, required: true },
   brand: { type: String, required: true },
   model: { type: String, required: true },
+  type: { type: String, required: true },
   year: { type: Number, required: true },
-  pricePerDay: { type: Number, required: true },
-  available: { type: Boolean, default: true }
-});
+  mileage: { type: String, required: true },
+  price: { type: Number, required: true },
+  availability: { type: String, enum: ["Available", "Not Available"], default: "Available" },
+  image: { type: String }, // URL or file path of the uploaded image
+  description: { type: String, required: true },
+  carNumber: { type: String, required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+}, { timestamps: true });
 
 const Car = mongoose.model("Car", carSchema);
 

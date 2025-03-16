@@ -62,9 +62,16 @@ const AccountInfo = () => {
       <OwnerHeader />
       <div className="account-info-content">
         <h2>Account Information</h2>
-        <div className="form-container"> {/* Container for form fields */}
+        <div 
+  className="form-container" 
+  style={{ 
+    marginTop: "25px" // Corrected: Added quotes and camelCase property name
+  }}
+>{/* Container for form fields */}
           <form>
-            <div className="form-group">
+            <div className="form-group"  style={{ 
+    marginTop: "20px" // Corrected: Added quotes and camelCase property name
+  }}>
               <label>User ID</label>
               <input
                 type="text"
@@ -120,6 +127,10 @@ const AccountInfo = () => {
             <button
               type="button"
               className="update-button"
+              style={{ 
+                width: "50%", // Corrected: Added quotes around the value and a comma
+                marginLeft: "45px" // Corrected: Added quotes and units
+              }}
               onClick={handleUpdate}
             >
               Update

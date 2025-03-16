@@ -48,6 +48,7 @@ const Login = () => {
     }
   };
   return (
+    <div className="login-page">
     <div className="login-wrapper">
       {/* Header */}
       <header className="app-header">
@@ -68,7 +69,8 @@ const Login = () => {
         <button
           className={activeUser === 'renter' ? 'active' : ''}
           onClick={() => setActiveUser('renter')}
-        >
+          style={{ color: 'black' }}
+          >
           Renter Login
         </button>
       </div>
@@ -114,13 +116,14 @@ const Login = () => {
 
         {/* Forgot Password Link */}
         <div className="forgot-password">
-            <button
-              className="forgot-password-link"
-              onClick={() => navigate('/forgot-password')}
-            >
-              Forgot your password?
-            </button>
-          </div>
+  <span
+    className="forgot-password-link"
+    style={{ color: '#007bff' }}
+    onClick={() => navigate('/forgot-password')}
+  >
+    Forgot your password?
+  </span>
+</div>
 
           {/* Login Button */}
           <button
@@ -142,6 +145,7 @@ const Login = () => {
 </button>
         </div>
       </div>
+    </div>
     </div>
   );
 };

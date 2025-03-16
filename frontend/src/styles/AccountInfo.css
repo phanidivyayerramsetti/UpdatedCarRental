@@ -2,15 +2,15 @@
 .account-info-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 90vh;
   }
   
   /* Account Info Content */
   .account-info-content {
-    padding: 20px;
+    padding: 15px;
     max-width: 600px;
     margin: 0 auto;
-    margin-top: 80px; /* Adjust based on the height of the OwnerHeader */
+    margin-top: 60px; /* Adjust based on the height of the OwnerHeader */
   }
   
   /* Form Group */
@@ -65,7 +65,7 @@
     padding: 20px;
     max-width: 600px;
     margin: 0 auto;
-    margin-top: 80px; /* Adjust based on the height of the OwnerHeader */
+    margin-top: 40px; /* Adjust based on the height of the OwnerHeader */
   }
   
   /* Form Container */
@@ -76,17 +76,22 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width:100%;
+    max-width:400px;
   }
   
   /* Form Group */
   .form-group {
     margin-bottom: 15px;
+    width: 100%;
+
   }
   
   .form-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    width: 100%;
+
   }
   
   .form-group input {
@@ -111,7 +116,7 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    width: 35%;
+    width: 60%;
     margin-left:33%;
    
   }

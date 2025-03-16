@@ -18,6 +18,8 @@ import RenterLayout from './components/RenterLayout';
 import RenterProfile from './components/RenterProfile';
 import RenterInfo from './components/RenterInfo';
 import ForgotPassword from './components/ForgotPassword';
+import AddCar from './components/AddCar';
+import UpdateCar from './components/UpdateCar';
 
  
 const App = () => {
@@ -56,6 +58,13 @@ const App = () => {
           <Route path="profile" element={<RenterProfile />}/>
           <Route path="profile/renter-info" element={<RenterInfo />} /> {/* Account Info page */}
         </Route>
+
+        <Route path="/update-car" element={<UpdateCar />} />
+
+        <Route path="/add-car" element={<AddCar />} />
+
+{/* Redirect to Manage Cars by default */}
+        <Route path="/" element={<ManageCars />} />
       </Routes>
     </Router>
   );

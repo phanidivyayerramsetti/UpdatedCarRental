@@ -2,6 +2,51 @@ import axios from "axios";
 
 const API_BASE_URL = "http://localhost:5555"; // Your backend server URL
 
+// Utility function to extract userId from the JWT token
+const getUserIdFromToken = () => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1])); // Decode the token payload
+      return payload.userId; // Return the userId from the token
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
+    }
+  }
+  return null;
+};
+
+// Add a new car
+export const addCar = async (carData) => {
+  const userId = getUserIdFromToken(); // Extract userId from the token
+  if (!userId) {
+    throw new Error("User ID not found in token");
+  }
+
+  const payload = { ...carData, userId }; // Include userId in the payload
+  return axios.post(`${API_BASE_URL}/api/cars`, payload, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+};
+
+// Fetch cars owned by the logged-in user
+export const fetchUserCars = async () => {
+  const userId = getUserIdFromToken(); // Extract userId from the token
+  if (!userId) {
+    throw new Error("User ID not found in token");
+  }
+
+  return axios.get(`${API_BASE_URL}/api/cars/user`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+};
+
+// Other API functions (registerUser, loginUser, etc.) remain unchanged
 export const registerUser = async (userData) => {
   return axios.post(`${API_BASE_URL}/api/users/auth/register`, userData);
 };
@@ -10,7 +55,6 @@ export const loginUser = async (userData) => {
   return axios.post(`${API_BASE_URL}/api/users/auth/login`, userData);
 };
 
-// Fetch user details (protected route)
 export const fetchUserDetails = async (token) => {
   return axios.get(`${API_BASE_URL}/api/users/auth/user`, {
     headers: {
@@ -19,7 +63,6 @@ export const fetchUserDetails = async (token) => {
   });
 };
 
-// Update user details (protected route)
 export const updateUserDetails = async (token, updatedData) => {
   return axios.put(`${API_BASE_URL}/api/users/auth/user`, updatedData, {
     headers: {
@@ -38,6 +81,21 @@ export const deleteAccount = async (token) => {
 
 export const forgotPassword = async (email, newPassword) => {
   const payload = { email, newPassword };
-  console.log('Sending forgot password request:', payload); // Log the payload
   return axios.post(`${API_BASE_URL}/api/users/auth/forgot-password`, payload);
+};
+
+export const updateCar = async (id, carData, token) => {
+  return axios.put(`${API_BASE_URL}/api/cars/${id}`, carData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const deleteCar = async (id) => {
+  return axios.delete(`${API_BASE_URL}/api/cars/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
 };
