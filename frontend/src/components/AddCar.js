@@ -56,17 +56,31 @@ const AddCar = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setNewCar({ ...newCar, image: imageUrl });
+      // const imageUrl = URL.createObjectURL(file);
+      // setNewCar({ ...newCar, image: imageUrl });
+      // setNewCar({ ...newCar, image: file }); // ✅ Store file instead of URL preview
+      setNewCar((prevCar) => ({
+        ...prevCar,
+        image: file, // ✅ Store the actual file
+      }));
+  
     }
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting Car Data:", newCar); // Debugging: Check full car object before sending
 
     try {
       const token = localStorage.getItem('token');
+      const formData = new FormData();
+          // Append all fields
+      Object.keys(newCar).forEach((key) => {
+        formData.append(key, newCar[key]); // ✅ Handles all form fields
+      });
+      console.log("Submitting form data:", Object.fromEntries(formData)); // 🔍 Debugging
+      console.log("isUpdate : ", isUpdate);
       if (isUpdate) {
         // Update existing car
         const response = await updateCar(car._id, newCar, token);
@@ -79,6 +93,8 @@ const AddCar = () => {
       navigate('/owner/manage-cars');
     } catch (error) {
       console.error('Error:', error);
+      console.error("Error:", error.response?.data || error.message); // 🔍 Log backend error
+
       alert('Failed to submit car. Please try again.');
     }
   };

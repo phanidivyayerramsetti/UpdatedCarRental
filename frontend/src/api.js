@@ -18,15 +18,21 @@ const getUserIdFromToken = () => {
 };
 
 // Add a new car
-export const addCar = async (carData) => {
+export const addCar = async (carData, token) => {
+  const formData = new FormData();
+  Object.keys(carData).forEach((key) => {
+    formData.append(key, carData[key]);
+  });
+
   const userId = getUserIdFromToken(); // Extract userId from the token
   if (!userId) {
     throw new Error("User ID not found in token");
   }
 
   const payload = { ...carData, userId }; // Include userId in the payload
-  return axios.post(`${API_BASE_URL}/api/cars`, payload, {
+  return axios.post(`${API_BASE_URL}/api/cars`, formData, {
     headers: {
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });

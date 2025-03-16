@@ -1,5 +1,8 @@
 import express from "express";
 import multer from "multer";
+import jwt from "jsonwebtoken"; // ✅ Use jwt to decode tokens
+import path from "path";
+import fs from "fs";
 import { body, validationResult } from "express-validator";
 import Car from "../models/Car.js";
 
@@ -41,9 +44,11 @@ router.post(
 
     try {
       const { brand, model, type, year, mileage, price, availability, description, carNumber, userId } = req.body;
+      console.log("File received:", req.file);
 
       // Get the file path of the uploaded image
-      const image = req.file ? req.file.path : null;
+      const image = req.file ? `/uploads/${req.file.filename}` : null;
+      console.log("image received:", image);
 
       const newCar = new Car({
         brand,
@@ -77,7 +82,9 @@ router.get("/user", async (req, res) => {
 
     const payload = JSON.parse(atob(token.split('.')[1]));
     const userId = payload.userId;
-
+//  // ✅ Decode token to get userId
+//  const decoded = jwt.verify(token, "your_jwt_secret"); // Change "your_jwt_secret" to your actual secret
+//  const userId = decoded.userId;
     const cars = await Car.find({ userId });
     res.json(cars);
   } catch (error) {
