@@ -145,6 +145,12 @@ router.post('/forgot-password', async (req, res) => {
   const { email, newPassword } = req.body;
   console.log('Email:', email); // Log the email
   console.log('New password:', newPassword); // Log the new password
+
+  if (!email || !newPassword) {
+    console.log('Missing fields:', { email, newPassword });
+    return res.status(400).json({ message: 'Email and new password are required' });
+  }
+
   try {
     console.log('Forgot password request received:', { email, newPassword }); // Log the request
 
@@ -161,10 +167,11 @@ router.post('/forgot-password', async (req, res) => {
     console.log('Hashed password:', hashedPassword); // Log the hashed password
 
     // Update the user's password
+    // Update user's password in one step
     user.password = hashedPassword;
-    await user.save();
+    await User.updateOne({ email }, { $set: { password: hashedPassword } });
 
-    console.log('Password updated successfully for user:', email); // Log success
+    console.log('Password updated successfully for:', email);
     res.status(200).json({ message: 'Password reset successfully' });
   } catch (error) {
     console.error('Error:', error);
