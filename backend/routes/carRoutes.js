@@ -5,7 +5,10 @@ import path from "path";
 import fs from "fs";
 import { body, validationResult } from "express-validator";
 import Car from "../models/Car.js";
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const router = express.Router();
 
 // Configure multer for file uploads
@@ -105,11 +108,27 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedCar = await Car.findByIdAndDelete(id); // Delete the car by ID
-    if (!deletedCar) {
+
+    // Find the car to get the image path
+    const car = await Car.findById(id);
+    if (!car) {
       return res.status(404).json({ message: "Car not found" });
     }
-    res.json({ message: "Car deleted successfully!" });
+
+    // Delete the image file if it exists
+    if (car.image) {
+      const filename = car.image.split("/").pop(); // Extract the filename (e.g., "car-image-12345.jpg")
+      const imagePath = path.join(__dirname, "../uploads", filename); // Construct the full path to the image
+      console.log("Image Path:", imagePath); // Log the image path
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath); // Delete the file
+      }
+    }
+
+    // Delete the car from the database
+    await Car.findByIdAndDelete(id);
+
+    res.json({ message: "Car and associated image deleted successfully!" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

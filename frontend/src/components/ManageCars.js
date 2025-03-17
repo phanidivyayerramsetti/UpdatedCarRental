@@ -74,15 +74,6 @@ const ManageCars = () => {
       {error && <p className="error-message">{error}</p>}
       <div className="table-container">
         <table className="car-table">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Details</th>
-              <th>Price</th>
-              <th>Availability</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
           <tbody>
             {cars.map((car) => (
               <tr key={car._id} className="car-row">

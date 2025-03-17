@@ -63,7 +63,6 @@ const AddCar = () => {
         ...prevCar,
         image: file, // ✅ Store the actual file
       }));
-  
     }
   };
 
@@ -75,7 +74,7 @@ const AddCar = () => {
     try {
       const token = localStorage.getItem('token');
       const formData = new FormData();
-          // Append all fields
+      // Append all fields
       Object.keys(newCar).forEach((key) => {
         formData.append(key, newCar[key]); // ✅ Handles all form fields
       });
@@ -94,7 +93,6 @@ const AddCar = () => {
     } catch (error) {
       console.error('Error:', error);
       console.error("Error:", error.response?.data || error.message); // 🔍 Log backend error
-
       alert('Failed to submit car. Please try again.');
     }
   };
@@ -182,6 +180,7 @@ const AddCar = () => {
                 name="availability"
                 value={newCar.availability}
                 onChange={handleInputChange}
+                required
               >
                 <option value="Available">Available</option>
                 <option value="Not Available">Not Available</option>
@@ -205,6 +204,7 @@ const AddCar = () => {
                 onChange={handleImageChange}
                 accept="image/*"
                 disabled={isUpdate} // Disable if in update mode
+                required={!isUpdate} // Required only when adding a new car
               />
             </div>
             <div className="form-group">
