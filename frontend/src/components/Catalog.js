@@ -31,15 +31,16 @@ const Catalog = () => {
 
   // Handle search (triggered by clicking the search icon or pressing Enter)
   const handleSearch = () => {
-    const query = searchQuery.toLowerCase();
+    const query = searchQuery.toLowerCase().trim(); // Trim whitespace and convert to lowercase
 
     // Filter cars based on the search query
     const filtered = cars.filter(
       (car) =>
-        car.brand.toLowerCase().includes(query) ||
-        car.model.toLowerCase().includes(query) ||
-        car.type.toLowerCase().includes(query) ||
-        car.year.toString().includes(query)
+        car.brand.toLowerCase().includes(query) || // Search by brand
+        car.model.toLowerCase().includes(query) || // Search by model
+        car.type.toLowerCase().includes(query) || // Search by type
+        car.year.toString().includes(query) || // Search by year
+        car.description.toLowerCase().includes(query) // Search by description
     );
     setFilteredCars(filtered);
   };
@@ -66,56 +67,68 @@ const Catalog = () => {
   return (
     <div className="catalog">
       {/* Catalog Heading and Search Bar */}
-      <div className="catalog-header">
-        <h2>Catalog</h2>
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search cars by brand, model, or year..."
-            value={searchQuery}
-            onChange={handleSearchInputChange}
-            onKeyPress={handleKeyPress} // Trigger search on Enter key press
-          />
-          <button className="search-icon-button" onClick={handleSearch}>
-            <FaSearch /> {/* Search icon */}
-          </button>
-        </div>
-      </div>
+     <div className="catalog-header">
+  <h2>Catalog</h2>
+  <div className="search-bar">
+    <input
+      type="text"
+      placeholder="Search cars by brand, model, type, year, or description..."
+      value={searchQuery}
+      onChange={handleSearchInputChange}
+      onKeyPress={handleKeyPress} // Trigger search on Enter key press
+    />
+    <button className="search-icon-button" onClick={handleSearch}>
+      <FaSearch /> {/* Search icon */}
+    </button>
+  </div>
+  {/* Display "No cars found" message here */}
+  {filteredCars.length === 0 && searchQuery.trim() !== "" && (
+    <div className="no-cars-message">
+      Sorry, no cars match your search for "{searchQuery}".
+    </div>
+  )}
+</div>
 
       {/* Cars Grid */}
       <div className="car-grid">
-        {filteredCars.map((car) => (
-          <div key={car._id} className="car-tile">
-            {/* Wishlist Icon */}
-            <div className="wishlist-icon">
-              {car.isWishlisted ? <FaHeart /> : <FaRegHeart />}
-            </div>
-
-            {/* Car Image */}
-            <div className="car-image-container">
-              <img src={car.image} alt={`${car.brand} ${car.model}`} className="car-image" />
-            </div>
-
-            {/* Car Details */}
-            <div className="car-details">
-              <h3>{car.brand} {car.model}, {car.year}</h3>
-              <p className="car-price">${car.price}/hr</p>
-            </div>
-
-            {/* Buttons */}
-            <div className="car-buttons">
-              <button className="cart-button">
-                <FaShoppingCart /> {/* Cart icon */}
-              </button>
-              <button
-                className="learn-more-button"
-                onClick={() => handleLearnMore(car)}
-              >
-                Learn More
-              </button>
-            </div>
+        {filteredCars.length === 0 ? ( // If no cars match the search
+          <div className="no-cars-message">
+            <p>Sorry, no cars match your search for "{searchQuery}".</p>
           </div>
-        ))}
+        ) : (
+          filteredCars.map((car) => (
+            <div key={car._id} className="car-tile">
+              {/* Wishlist Icon */}
+              <div className="wishlist-icon">
+                {car.isWishlisted ? <FaHeart /> : <FaRegHeart />}
+              </div>
+
+              {/* Car Image */}
+              <div className="car-image-container">
+                <img src={car.image} alt={`${car.brand} ${car.model}`} className="car-image" />
+              </div>
+
+              {/* Car Details */}
+              <div className="car-details">
+                <h3>{car.brand} {car.model}, {car.year}</h3>
+                <p className="car-price">${car.price}/hr</p>
+              </div>
+
+              {/* Buttons */}
+              <div className="car-buttons">
+                <button className="cart-button">
+                  <FaShoppingCart /> {/* Cart icon */}
+                </button>
+                <button
+                  className="learn-more-button"
+                  onClick={() => handleLearnMore(car)}
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {/* Modal for Detailed Car Information */}

@@ -278,4 +278,13 @@
     .car-tile {
       height: auto;
     }
+
+    /* No Cars Message */
+.no-cars-message {
+  text-align: center;
+  font-size: 16px;
+  color: red; /* Red text color */
+  margin-top: 10px; /* Space below the search bar */
+  width: 100%;
+}
   }
