@@ -1,0 +1,281 @@
+/* Catalog.css */
+.catalog {
+    padding: 20px;
+    margin-top: 80px; /* Add margin to avoid overlap with the header */
+    overflow-y: auto; /* Allow vertical scrolling */
+    height: calc(100vh - 80px); /* Set height to viewport height minus the margin */
+  }
+  
+  /* Catalog Header */
+  .catalog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  /* Catalog Heading */
+  .catalog-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* Search Bar */
+  .search-bar {
+    position: relative;
+    flex: 1;
+    max-width: 70%;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 10px 40px 10px 20px;
+    border: 1px solid #5B5B5B;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .search-bar input::placeholder {
+    color: #999;
+  }
+  
+  .search-bar input:focus {
+    border-color: #57AEC3;
+  }
+  
+  /* Search Icon Button */
+  .search-icon-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #5B5B5B;
+    padding: 0;
+  }
+  
+  .search-icon-button:hover {
+    color: #57AEC3;
+  }
+  
+  /* Cars Grid */
+  .car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Fixed width for each tile */
+    gap: 20px;
+    column-gap: 1%;
+    justify-content: center;
+    padding-bottom: 20px;
+    width: 100%; /* Ensure the grid takes full width */
+  }
+  
+  /* Car Tile */
+  .car-tile {
+    border: 1px solid #5B5B5B;
+    padding: 15px;
+    border-radius: 8px;
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto; /* Allow height to adjust based on content */
+    width: 100%; /* Ensure the tile takes the full width of the grid cell */
+    max-width: 250px; /* Set a max-width to prevent tiles from expanding */
+    margin: 0 auto; /* Center the tile within the grid cell */
+  }
+  
+  /* Wishlist Icon */
+  .wishlist-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    color: black;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    padding: 5px;
+  }
+  
+  /* Car Image Container */
+  .car-image-container {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  /* Car Image */
+  .car-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Car Details */
+  .car-details {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .car-details h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .car-price {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #57AEC3;
+    font-weight: bold;
+  }
+  
+  /* Car Buttons */
+  .car-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+    margin-top: auto;
+  }
+  
+  .cart-button {
+    background-color: #57AEC3;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+  }
+  
+  .cart-button svg {
+    color: black;
+  }
+  
+  .learn-more-button {
+    background-color: #ACC4CA;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: white;
+    width: 65%;
+  }
+  
+  /* Modal Styles */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 300px;
+    width: 100%;
+    position: relative;
+  }
+  
+  .modal-car-image-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .modal-car-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .modal-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .cart-button2 {
+    background-color: #ACC4CA;
+    color: black;
+    width: 22%;
+  }
+  
+  .book-now-button {
+    background-color: #ACC4CA;
+    color: white;
+    width: 75%;
+  }
+  
+  .close-modal-button {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: none;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    color: #333;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .close-modal-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .catalog-header {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .search-bar {
+      max-width: 100%;
+    }
+  
+    .car-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+  
+    .car-tile {
+      height: auto;
+    }
+  }

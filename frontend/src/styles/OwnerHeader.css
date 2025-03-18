@@ -186,4 +186,35 @@
   .header-nav.open {
     display: flex; /* Show the navigation tabs when the menu is open */
   }
+
+  /* Light Theme */
+body.light {
+  --bg-color: white;
+  --text-color: black;
+}
+
+/* Dark Theme */
+body.dark {
+  --bg-color: #1e1e1e;
+  --text-color: white;
+}
+
+/* Apply theme to the whole app */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Example: Adjust header styles */
+.app-header {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Dropdown styling */
+.dropdown {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
 }

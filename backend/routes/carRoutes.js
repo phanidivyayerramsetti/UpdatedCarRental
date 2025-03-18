@@ -133,6 +133,32 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+import User from "../models/User.js"; // Import the User model
+
+// Fetch all cars (for renters to view)
+router.get("/", async (req, res) => {
+  try {
+    const cars = await Car.find(); // Fetch all cars
+
+    // Fetch owner details for each car
+    const carsWithOwnerDetails = await Promise.all(
+      cars.map(async (car) => {
+        const owner = await User.findById(car.userId, "firstName phoneNumber"); // Fetch owner details
+        return {
+          ...car._doc, // Spread the car details
+          owner: {
+            firstName: owner.firstName,
+            phoneNumber: owner.phoneNumber,
+          },
+        };
+      })
+    );
+
+    res.json(carsWithOwnerDetails); // Send the response with owner details
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Other routes (update, delete, etc.) remain unchanged
 export default router;

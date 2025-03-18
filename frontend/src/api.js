@@ -17,6 +17,17 @@ const getUserIdFromToken = () => {
   return null;
 };
 
+// Fetch all cars from the database
+export const fetchAllCars = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/cars`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching cars:", error);
+    throw error;
+  }
+};
+
 // Add a new car
 export const addCar = async (carData, token) => {
   const formData = new FormData();

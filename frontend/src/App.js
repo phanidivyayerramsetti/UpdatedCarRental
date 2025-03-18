@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ThemeProvider from './components/ThemeContext'; // Import ThemeProvider
 import Login from './components/Login';
 import Registration from './components/Registration';
 import OwnerDashboard from './components/OwnerDashboard';
@@ -24,6 +25,7 @@ import UpdateCar from './components/UpdateCar';
  
 const App = () => {
   return (
+    <ThemeProvider>
     <Router>
       <Routes>
         {/* Default route to Login */}
@@ -32,8 +34,8 @@ const App = () => {
         {/* Login route */}
         <Route path="/login" element={<Login />} />
 
-        {/* Registration route */}
-        <Route path="/register" element={<Registration />} />
+          {/* Registration route */}
+          <Route path="/register" element={<Registration />} />
 
         {/* Owner-specific routes */}
         <Route path="/owner" element={<OwnerLayout />}>
@@ -67,6 +69,7 @@ const App = () => {
         <Route path="/" element={<ManageCars />} />
       </Routes>
     </Router>
+    </ThemeProvider>
   );
 };
 

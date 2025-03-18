@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext  } from 'react';
 import { FaUserCircle, FaBars } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { ThemeContext } from './ThemeContext'; // Import ThemeContext
 import '../styles/OwnerHeader.css';
 
 const OwnerHeader = () => {
@@ -10,6 +11,8 @@ const OwnerHeader = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for profile dropdown
   const [openSubDropdown, setOpenSubDropdown] = useState(null); // State for sub-dropdown
   const dropdownRef = useRef(null); // Ref for the dropdown container
+  const { theme, toggleTheme } = useContext(ThemeContext); // Get theme from context
+
 
   // Determine the active tab based on the current route
   const getActiveTab = () => {
@@ -91,8 +94,8 @@ const OwnerHeader = () => {
     {
       label: 'Theme',
       subOptions: [
-        { label: 'Light', action: () => console.log('Light theme selected') },
-        { label: 'Dark', action: () => console.log('Dark theme selected') },
+        { label: 'Light', action: () => toggleTheme('light') },
+        { label: 'Dark', action: () => toggleTheme('dark') },
       ],
     },
     {

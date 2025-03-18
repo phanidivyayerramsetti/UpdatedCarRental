@@ -73,49 +73,49 @@ const ManageCars = () => {
       <h3>Owned Cars</h3>
       {error && <p className="error-message">{error}</p>}
       <div className="table-container">
-        <table className="car-table">
-          <tbody>
-            {cars.map((car) => (
-              <tr key={car._id} className="car-row">
-                {/* Image Column */}
-                <td>
-                  {car.image ? (
-                    <img src={car.image} alt={`${car.brand} ${car.model}`} className="car-image" />
-                  ) : (
-                    <div className="no-image">No Image</div>
-                  )}
-                </td>
+      <table className="car-table">
+  <tbody>
+    {cars.map((car) => (
+      <tr key={car._id} className="car-row">
+        {/* Image Column */}
+        <td>
+          {car.image ? (
+            <img src={car.image} alt={`${car.brand} ${car.model}`} className="car-imageOwner" />
+          ) : (
+            <div className="no-image">No Image</div>
+          )}
+        </td>
 
-                {/* Details Column */}
-                <td className="details-column">
-                  <div className="detail-row">
-                    <span className="detail-label"></span> {car.brand} {car.model}
-                  </div>
-                  <div className="detail-row">
-                    <span className="detail-label"></span> {car.type}
-                  </div>
-                  <div className="detail-row">
-                    <span className="detail-label"></span> {car.year} Model
-                  </div>
-                </td>
+        {/* Details Column */}
+        <td className="details-column">
+          <div className="detail-row">
+            <span className="detail-label"></span> {car.brand} {car.model}
+          </div>
+          <div className="detail-row">
+            <span className="detail-label"></span> {car.type}
+          </div>
+          <div className="detail-row">
+            <span className="detail-label"></span> {car.year} Model
+          </div>
+        </td>
 
-                {/* Price Column */}
-                <td>${car.price}</td>
+        {/* Price Column */}
+        <td>${car.price}</td>
 
-                {/* Availability Column */}
-                <td>{car.availability}</td>
+        {/* Availability Column */}
+        <td>{car.availability}</td>
 
-                {/* Actions Column */}
-                <td className="actions-column">
-                  <div className="buttons-container">
-                    <button onClick={() => handleUpdateCar(car._id)}>Update</button>
-                    <button onClick={() => handleDeleteCar(car._id)}>Delete</button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {/* Actions Column */}
+        <td className="actions-column">
+          <div className="buttons-container">
+            <button onClick={() => handleUpdateCar(car._id)}>Update</button>
+            <button onClick={() => handleDeleteCar(car._id)}>Delete</button>
+          </div>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
       </div>
     </div>
   );
