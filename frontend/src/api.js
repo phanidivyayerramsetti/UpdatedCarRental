@@ -3,7 +3,7 @@ import axios from "axios";
 const API_BASE_URL = "http://localhost:5555"; // Your backend server URL
 
 // Utility function to extract userId from the JWT token
-const getUserIdFromToken = () => {
+export const getUserIdFromToken = () => {
   const token = localStorage.getItem('token');
   if (token) {
     try {

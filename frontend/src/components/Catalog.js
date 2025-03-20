@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchAllCars, toggleWishlist } from "../api";
+import { fetchAllCars, toggleWishlist, getUserIdFromToken } from "../api";
 import { FaHeart, FaRegHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { useLocation } from "react-router-dom"; // Import useLocation
 import "../styles/Catalog.css";
@@ -11,7 +11,7 @@ const Catalog = () => {
   const [selectedCar, setSelectedCar] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation(); // Get the current location
-  const userId = localStorage.getItem("userId");
+  const userId = getUserIdFromToken();
 
   // Fetch all cars from the database
   useEffect(() => {
