@@ -116,3 +116,36 @@ export const deleteCar = async (id) => {
     },
   });
 };
+
+export const fetchWishlistedCars = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/cars/wishlist`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching wishlisted cars:', error);
+    throw error;
+  }
+};
+
+// Toggle wishlist for a car
+export const toggleWishlist = async (carId) => {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/api/cars/${carId}/wishlist`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error toggling wishlist:', error);
+    throw error;
+  }
+};

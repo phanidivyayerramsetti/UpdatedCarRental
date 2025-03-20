@@ -160,5 +160,41 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Toggle wishlist for a car
+router.post('/:id/wishlist', async (req, res) => {
+  try {
+    const { id } = req.params; // Car ID
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ message: 'No token provided' });
+    }
+
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const userId = payload.userId; // User ID from token
+
+    // Find the car
+    const car = await Car.findById(id);
+    if (!car) {
+      return res.status(404).json({ message: 'Car not found' });
+    }
+
+    // Check if the user has already wishlisted the car
+    const isWishlisted = car.wishlistedBy.includes(userId);
+
+    if (isWishlisted) {
+      // Remove the user from the wishlist
+      car.wishlistedBy = car.wishlistedBy.filter((id) => id.toString() !== userId);
+    } else {
+      // Add the user to the wishlist
+      car.wishlistedBy.push(userId);
+    }
+
+    await car.save();
+    res.json({ message: 'Wishlist updated successfully!', car });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Other routes (update, delete, etc.) remain unchanged
 export default router;

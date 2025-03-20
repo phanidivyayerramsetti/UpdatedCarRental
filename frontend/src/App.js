@@ -21,6 +21,8 @@ import RenterInfo from './components/RenterInfo';
 import ForgotPassword from './components/ForgotPassword';
 import AddCar from './components/AddCar';
 import UpdateCar from './components/UpdateCar';
+import Wishlist from './components/Wishlist';
+import Cart from './components/Cart';
 
  
 const App = () => {
@@ -57,6 +59,8 @@ const App = () => {
           <Route path="catalog" element={<Catalog />} />
           <Route path="notifications" element={<RenterNotifications />} />
           <Route path="history" element={<RenterHistory />} />
+          <Route path="wishlist" element={<Wishlist/>} />
+          <Route path="cart" element={<Cart/>} />
           <Route path="profile" element={<RenterProfile />}/>
           <Route path="profile/renter-info" element={<RenterInfo />} /> {/* Account Info page */}
         </Route>

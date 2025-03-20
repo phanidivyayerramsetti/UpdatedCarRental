@@ -1,28 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { fetchAllCars } from "../api"; // Import the fetchAllCars function
-import { FaHeart, FaRegHeart, FaShoppingCart, FaSearch } from "react-icons/fa"; // For wishlist, cart, and search icons
-import "../styles/Catalog.css"; // Add CSS for styling
+import { fetchAllCars, toggleWishlist } from "../api";
+import { FaHeart, FaRegHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
+import { useLocation } from "react-router-dom"; // Import useLocation
+import "../styles/Catalog.css";
 
 const Catalog = () => {
-  const [cars, setCars] = useState([]); // State to store all cars
-  const [filteredCars, setFilteredCars] = useState([]); // State to store filtered cars
-  const [searchQuery, setSearchQuery] = useState(""); // State to store search query
-  const [selectedCar, setSelectedCar] = useState(null); // State to store the selected car for modal
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+  const [cars, setCars] = useState([]);
+  const [filteredCars, setFilteredCars] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCar, setSelectedCar] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const location = useLocation(); // Get the current location
 
   // Fetch all cars from the database
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        const carsData = await fetchAllCars(); // Use the fetchAllCars function
+        const carsData = await fetchAllCars();
         setCars(carsData);
-        setFilteredCars(carsData); // Initialize filtered cars with all cars
+        setFilteredCars(carsData); // Reset filteredCars to all cars
       } catch (error) {
         console.error("Error fetching cars:", error);
       }
     };
     fetchCars();
   }, []);
+
+  // Reset filteredCars whenever the location changes (i.e., when navigating back to the Catalog page)
+  useEffect(() => {
+    setFilteredCars(cars); // Reset filteredCars to all cars
+    setSearchQuery(""); // Clear the search query
+  }, [location, cars]); // Trigger when location or cars state changes
 
   // Handle search input change
   const handleSearchInputChange = (e) => {
@@ -64,101 +72,114 @@ const Catalog = () => {
     setSelectedCar(null);
   };
 
+  // Handle wishlist icon click
+  const handleWishlistClick = async (carId) => {
+    try {
+      const updatedCar = await toggleWishlist(carId); // Toggle wishlist
+      // Update the cars state to reflect the new wishlist status
+      setCars((prevCars) =>
+        prevCars.map((car) =>
+          car._id === updatedCar._id ? updatedCar : car
+        )
+      );
+      setFilteredCars((prevCars) =>
+        prevCars.map((car) =>
+          car._id === updatedCar._id ? updatedCar : car
+        )
+      );
+    } catch (error) {
+      console.error("Error toggling wishlist:", error);
+    }
+  };
+
   return (
     <div className="catalog">
-      {/* Catalog Heading and Search Bar */}
-     <div className="catalog-header">
-  <h2>Catalog</h2>
-  <div className="search-bar">
-    <input
-      type="text"
-      placeholder="Search cars by brand, model, type, year, or description..."
-      value={searchQuery}
-      onChange={handleSearchInputChange}
-      onKeyPress={handleKeyPress} // Trigger search on Enter key press
-    />
-    <button className="search-icon-button" onClick={handleSearch}>
-      <FaSearch /> {/* Search icon */}
-    </button>
-  </div>
-  {/* Display "No cars found" message here */}
-  {filteredCars.length === 0 && searchQuery.trim() !== "" && (
-    <div className="no-cars-message">
-      Sorry, no cars match your search for "{searchQuery}".
-    </div>
-  )}
-</div>
+      {/* Catalog Header and Search Bar */}
+      <div className="catalog-header">
+        <h2>Catalog</h2>
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search cars by brand, model, type, year, or description..."
+            value={searchQuery}
+            onChange={handleSearchInputChange}
+            onKeyPress={handleKeyPress}
+          />
+          <button className="search-icon-button" onClick={handleSearch}>
+            <FaSearch />
+          </button>
+        </div>
+        {filteredCars.length === 0 && searchQuery.trim() !== "" && (
+          <div className="no-cars-message" style={{ color: "red" }}>
+            Sorry, no cars match your search for "{searchQuery}".
+          </div>
+        )}
+      </div>
 
       {/* Cars Grid */}
       <div className="car-grid">
-        {filteredCars.length === 0 ? ( // If no cars match the search
-          <div className="no-cars-message">
-            <p>Sorry, no cars match your search for "{searchQuery}".</p>
-          </div>
-        ) : (
-          filteredCars.map((car) => (
-            <div key={car._id} className="car-tile">
-              {/* Wishlist Icon */}
-              <div className="wishlist-icon">
-                {car.isWishlisted ? <FaHeart /> : <FaRegHeart />}
-              </div>
-
-              {/* Car Image */}
-              <div className="car-image-container">
-                <img src={car.image} alt={`${car.brand} ${car.model}`} className="car-image" />
-              </div>
-
-              {/* Car Details */}
-              <div className="car-details">
-                <h3>{car.brand} {car.model}, {car.year}</h3>
-                <p className="car-price">${car.price}/hr</p>
-              </div>
-
-              {/* Buttons */}
-              <div className="car-buttons">
-                <button className="cart-button">
-                  <FaShoppingCart /> {/* Cart icon */}
-                </button>
-                <button
-                  className="learn-more-button"
-                  onClick={() => handleLearnMore(car)}
-                >
-                  Learn More
-                </button>
-              </div>
+        {filteredCars.map((car) => (
+          <div key={car._id} className="car-tile">
+            {/* Wishlist Icon */}
+            <div
+              className="wishlist-icon"
+              onClick={() => handleWishlistClick(car._id)} // Handle wishlist click
+            >
+              {car.wishlistedBy?.includes(localStorage.getItem('userId')) ? (
+                <FaHeart style={{ color: "black" }} /> // Filled heart if wishlisted
+              ) : (
+                <FaRegHeart /> // Outline heart if not wishlisted
+              )}
             </div>
-          ))
-        )}
+
+            {/* Car Image */}
+            <div className="car-image-container">
+              <img src={car.image} alt={`${car.brand} ${car.model}`} className="car-image" />
+            </div>
+
+            {/* Car Details */}
+            <div className="car-details">
+              <h3>{car.brand} {car.model}, {car.year}</h3>
+              <p className="car-price">${car.price}/hr</p>
+            </div>
+
+            {/* Buttons */}
+            <div className="car-buttons">
+              <button className="cart-button">
+                <FaShoppingCart />
+              </button>
+              <button
+                className="learn-more-button"
+                onClick={() => handleLearnMore(car)}
+              >
+                Learn More
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Modal for Detailed Car Information */}
       {isModalOpen && selectedCar && (
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            {/* Close Button (Cross Mark) */}
             <button className="close-modal-button" onClick={handleCloseModal}>
               ×
             </button>
-
-            {/* Car Image in Modal */}
             <div className="modal-car-image-container">
               <img src={selectedCar.image} alt={`${selectedCar.brand} ${selectedCar.model}`} className="modal-car-image" />
             </div>
-
             <h2>{selectedCar.brand} {selectedCar.model}</h2>
             <p>Type: {selectedCar.type}</p>
             <p>Mileage: {selectedCar.mileage}</p>
             <p>Price: ${selectedCar.price}/hr</p>
             <p>Availability: {selectedCar.availability}</p>
-
             <div className="modal-buttons">
               <button className="cart-button2">
-                <FaShoppingCart /> {/* Cart icon */}
+                <FaShoppingCart />
               </button>
               <button className="book-now-button">Book Now</button>
             </div>
-
-            {/* Owner Details */}
             <div className="owner-details">
               <h3>Owner Details</h3>
               <p>Name: {selectedCar.owner?.firstName || "N/A"}</p>

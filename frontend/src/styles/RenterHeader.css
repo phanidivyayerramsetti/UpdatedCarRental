@@ -33,9 +33,10 @@
 
 /* Navigation Tabs (Visible by Default on Larger Screens) */
 .header-nav {
-  flex-grow: 1;
-  display: flex; /* Ensure the container is a flexbox */
+  display: flex;
   justify-content: flex-end; /* Align tabs to the right */
+  align-items: center;
+  padding-right: 20px; /* Add padding to the right */
 }
 
 .header-nav ul {
@@ -43,17 +44,25 @@
   margin: 0;
   padding: 0;
   display: flex;
+  gap: 20px; /* Equal gaps between tabs */
+  flex: 1; /* Allow the ul to grow and take available space */
+  justify-content: flex-end; /* Align tabs to the right */
 }
 
 .header-nav ul li {
   font-size: 16px; /* Adjust font size */
   cursor: pointer;
   white-space: nowrap; /* Prevent text from wrapping */
-  padding: 15px 20px; /* Add padding to match header height */
+  padding: 15px 10px; /* Add padding */
   position: relative; /* For the border */
   transition: all 0.3s; /* Smooth transition for all properties */
   display: flex;
   align-items: center; /* Vertically center the text */
+  justify-content: center; /* Center text horizontally */
+  flex: 0 1 auto; /* Allow tabs to shrink and grow as needed */
+  min-width: 80px; /* Set a minimum width for each tab */
+  gap: 8px; /* Space between icon and text */
+  box-sizing: border-box; /* Ensure padding and borders are included in the width */
 }
 
 /* Hover Effect */
@@ -89,7 +98,6 @@
   border-bottom: 2px solid #353D45; /* Bottom border for active tab */
 }
 
-/* Dropdown */
 /* Dropdown */
 .dropdown {
   position: absolute;
@@ -167,13 +175,6 @@
   border: 1px solid #000; /* Black border for highlighted option */
 }
 
-.profile-icon.active {
-  background-color: rgba(53, 61, 69, 0.1); /* Light background for active tab */
-  border-left: 2px solid #353D45; /* Left border for active tab */
-  border-right: 2px solid #353D45; /* Right border for active tab */
-  border-bottom: 2px solid #353D45; /* Bottom border for active tab */
-}
-
 /* Show hamburger menu on smaller screens */
 @media (max-width: 768px) {
   .hamburger-menu {
@@ -193,5 +194,16 @@
     background-color: #B7DBEF;
     width: 100%;
     z-index: 1000;
+  }
+
+  .header-nav.open ul {
+    flex-direction: column; /* Stack the tabs vertically */
+    gap: 10px; /* Reduce gap for smaller screens */
+  }
+
+  .header-nav.open ul li {
+    width: 100%; /* Full width for stacked tabs */
+    justify-content: flex-start; /* Align text to the left */
+    padding: 10px 20px; /* Add padding for better touch targets */
   }
 }

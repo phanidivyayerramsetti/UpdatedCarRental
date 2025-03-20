@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FaUserCircle, FaBars } from 'react-icons/fa';
+import { FaUserCircle, FaBars, FaHeart, FaShoppingCart } from 'react-icons/fa'; // Added Wishlist and Cart icons
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/RenterHeader.css';
 
@@ -16,6 +16,8 @@ const RenterHeader = () => {
     if (location.pathname.includes('catalog')) return 'Catalog';
     if (location.pathname.includes('notifications')) return 'Notifications';
     if (location.pathname.includes('history')) return 'History';
+    if (location.pathname.includes('wishlist')) return 'Wishlist'; // Check for wishlist route
+    if (location.pathname.includes('cart')) return 'Cart'; // Check for cart route
     if (location.pathname.includes('profile')) return 'Profile'; // Check for profile routes
     return '/renter'; // Default to Home
   };
@@ -32,13 +34,13 @@ const RenterHeader = () => {
           Authorization: `Bearer ${token}`, // Include the token in the request
         },
       });
-  
+
       const data = await response.json();
-  
+
       if (!response.ok) {
         throw new Error(data.message || 'Failed to delete account');
       }
-  
+
       return data; // Return the response data
     } catch (error) {
       console.error('Error deleting account:', error);
@@ -58,11 +60,14 @@ const RenterHeader = () => {
       case 'Notifications':
         navigate('/renter/notifications');
         break;
-      case 'Requests':
-        navigate('/renter/requests');
-        break;
       case 'History':
         navigate('/renter/history');
+        break;
+      case 'Wishlist':
+        navigate('/renter/wishlist'); // Navigate to wishlist page
+        break;
+      case 'Cart':
+        navigate('/renter/cart'); // Navigate to cart page
         break;
       case 'Profile':
         navigate('/renter/profile');
@@ -106,15 +111,10 @@ const RenterHeader = () => {
             try {
               // Call the API to delete the account
               const token = localStorage.getItem('token');
-              console.log(token);
               const response = await deleteAccount(token);
-              console.log(response);
-              console.log(response.message);
 
-    
               // If the account is deleted successfully
-              if (response.message==="Account deleted successfully") {
-                console.log('Account deleted successfully');
+              if (response.message === 'Account deleted successfully') {
                 localStorage.removeItem('token'); // Remove token
                 localStorage.removeItem('role'); // Remove role
                 navigate('/login'); // Redirect to login page
@@ -168,13 +168,13 @@ const RenterHeader = () => {
       {/* Middle: Navigation Tabs */}
       <nav className={`header-nav ${isMenuOpen ? 'open' : ''}`}>
         <ul>
-          {['Catalog', 'Notifications','History'].map((tab) => (
+          {['Catalog', 'Notifications', 'History', 'Wishlist', 'Cart'].map((tab) => (
             <li
               key={tab}
               className={activeTab === tab ? 'active' : ''}
               onClick={() => handleTabClick(tab)}
             >
-              {tab}
+              {tab === 'Wishlist' ? <FaHeart size={16} /> : tab === 'Cart' ? <FaShoppingCart size={16} /> : tab}
             </li>
           ))}
         </ul>

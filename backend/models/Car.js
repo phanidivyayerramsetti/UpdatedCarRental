@@ -11,7 +11,8 @@ const carSchema = new mongoose.Schema({
   image: { type: String }, // URL or file path of the uploaded image
   description: { type: String, required: true },
   carNumber: { type: String, required: true },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // Owner's ID
+  wishlistedBy: { type: [mongoose.Schema.Types.ObjectId], ref: "User", default: [] }, // Default to empty array
 }, { timestamps: true });
 
 const Car = mongoose.model("Car", carSchema);

@@ -279,12 +279,25 @@
       height: auto;
     }
 
-    /* No Cars Message */
-.no-cars-message {
-  text-align: center;
-  font-size: 16px;
-  color: red; /* Red text color */
-  margin-top: 10px; /* Space below the search bar */
-  width: 100%;
-}
+    .no-cars-message {
+      text-align: center;
+      font-size: 16px;
+      color: red; /* Red text color */
+      margin-top: 10px; /* Space below the search bar */
+      width: 100%;
+    }
   }
+
+  /* Catalog.css */
+.wishlist-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 1;
+}
+
+.wishlist-icon:hover {
+  opacity: 0.8;
+}
