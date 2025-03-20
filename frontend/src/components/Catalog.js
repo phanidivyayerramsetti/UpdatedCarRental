@@ -11,6 +11,7 @@ const Catalog = () => {
   const [selectedCar, setSelectedCar] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation(); // Get the current location
+  const userId = localStorage.getItem("userId");
 
   // Fetch all cars from the database
   useEffect(() => {
@@ -79,12 +80,12 @@ const Catalog = () => {
       // Update the cars state to reflect the new wishlist status
       setCars((prevCars) =>
         prevCars.map((car) =>
-          car._id === updatedCar._id ? updatedCar : car
+          car._id === updatedCar.car._id ? updatedCar.car : car
         )
       );
       setFilteredCars((prevCars) =>
         prevCars.map((car) =>
-          car._id === updatedCar._id ? updatedCar : car
+          car._id === updatedCar.car._id ? updatedCar.car : car
         )
       );
     } catch (error) {
@@ -121,16 +122,14 @@ const Catalog = () => {
         {filteredCars.map((car) => (
           <div key={car._id} className="car-tile">
             {/* Wishlist Icon */}
-            <div
-              className="wishlist-icon"
-              onClick={() => handleWishlistClick(car._id)} // Handle wishlist click
-            >
-              {car.wishlistedBy?.includes(localStorage.getItem('userId')) ? (
-                <FaHeart style={{ color: "black" }} /> // Filled heart if wishlisted
-              ) : (
-                <FaRegHeart /> // Outline heart if not wishlisted
-              )}
-            </div>
+
+            <div className="wishlist-icon" onClick={() => handleWishlistClick(car._id)}>
+            {car.wishlistedBy?.includes(userId) ? (
+              <FaHeart style={{ color: "red" }} />
+            ) : (
+              <FaRegHeart style={{ color: "black" }} />
+            )}
+          </div>
 
             {/* Car Image */}
             <div className="car-image-container">

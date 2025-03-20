@@ -40,7 +40,7 @@ export const addCar = async (carData, token) => {
     throw new Error("User ID not found in token");
   }
 
-  const payload = { ...carData, userId }; // Include userId in the payload
+  // const payload = { ...carData, userId }; // Include userId in the payload
   return axios.post(`${API_BASE_URL}/api/cars`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -132,15 +132,20 @@ export const fetchWishlistedCars = async () => {
 };
 
 // Toggle wishlist for a car
-export const toggleWishlist = async (carId) => {
+export const toggleWishlist = async (carId, token) => {
   try {
     const response = await axios.post(
       `${API_BASE_URL}/api/cars/${carId}/wishlist`,
       {},
       {
         headers: {
+          // Authorization: `Bearer ${token}`,
           Authorization: `Bearer ${localStorage.getItem('token')}`,
+
         },
+        // headers: {
+        //   Authorization: `Bearer ${localStorage.getItem('token')}`,
+        // },
       }
     );
     return response.data;
